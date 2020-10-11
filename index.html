@@ -30,9 +30,20 @@
     justify-content: center;
     align-items: center;
   }
+  .cell:nth-child(9n-3),
+  .cell:nth-child(9n-6) {
+    border-right: 2px solid black;
+  }
+  .row:nth-child(3n+1) {
+    border-top: 1px solid black;
+  }
   .col {
     display: flex;
     flex-direction: column;
+  }
+  .row {
+    display: flex;
+    flex-direction: row;
   }
   body {
     font-size: 28px;
