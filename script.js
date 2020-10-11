@@ -1,16 +1,3 @@
-const sudoku = [
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-  [1,2,3,4,5,6,7,8,9],
-]
-
-
 function makeGrid(sudoku) {
   const grid = $("<div>").addClass("grid");
   const gridCol1 = makeCol();
@@ -62,7 +49,7 @@ function makeCell(num) {
 }
 
 function makeSudoku() {
-  let template = [
+  const template = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,10 +58,110 @@ function makeSudoku() {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
   ]
 
-  // first let's find 
+  // first let's pick a random box in the template
+  const rng = Math.floor(Math.random() * 9);
+
+  // then we set up the box with 1-9 and shuffle it around
+  let box = [1,2,3,4,5,6,7,8,9];
+  box = shuffle(box);
+
+  // setup the first box in the grid
+  template[rng] = box;
+
+  // let's set up our rows and cols to make placement easier
+  const rows = setRows(template);
+  const cols = setCols(template);
+
+  console.log("Rows", rows);
+  console.log("Cols", cols);
+
+  // 
+
+  return template;
 }
 
+function shuffle(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i+1; j < array.length; j++) {
+      let temp = array[i];
+      let rng = Math.floor(Math.random() * array.length);
+      array[i] = array[rng];
+      array[rng] = temp;
+    }
+  }
+  return array;
+}
 
+function setRows(array) {
+  const rows = [[], [], [], [], [], [], [], [], []];
+  array.forEach((box, bIndex) => {
+    box.forEach((cell, cIndex) => {
+      if (Math.floor(bIndex / 3) === 0) {
+        if (cIndex < 3) {
+          rows[0].push(cell);
+        } else if (cIndex < 6) {
+          rows[1].push(cell);
+        } else {
+          rows[2].push(cell);
+        }
+      } else if (Math.floor(bIndex / 3) === 1) {
+        if (cIndex < 3) {
+          rows[3].push(cell);
+        } else if (cIndex < 6) {
+          rows[4].push(cell);
+        } else {
+          rows[5].push(cell);
+        }
+      } else {
+        if (cIndex < 3) {
+          rows[6].push(cell);
+        } else if (cIndex < 6) {
+          rows[7].push(cell);
+        } else {
+          rows[8].push(cell);
+        }
+      }
+    })
+  })
+  return rows;
+}
+
+function setCols(array) {
+  const cols = [[],[],[],[],[],[],[],[],[]];
+  array.forEach((box, bIndex) => {
+    box.forEach((cell, cIndex) => {
+      if (bIndex % 3 === 0) {
+        if (cIndex % 3 === 0) {
+          cols[0].push(cell);
+        } else if (cIndex % 3 === 1) {
+          cols[1].push(cell);
+        } else {
+          cols[2].push(cell);
+        }
+      } else if (bIndex % 3 === 1) {
+        if (cIndex % 3 === 0) {
+          cols[3].push(cell);
+        } else if (cIndex % 3 === 1) {
+          cols[4].push(cell);
+        } else {
+          cols[5].push(cell);
+        }
+      } else {
+        if (cIndex % 3 === 0) {
+          cols[6].push(cell);
+        } else if (cIndex % 3 === 1) {
+          cols[7].push(cell);
+        } else {
+          cols[8].push(cell);
+        }
+      }
+    })
+  })
+  return cols;
+}
+
+const sudoku = makeSudoku();
 makeGrid(sudoku);
