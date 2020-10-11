@@ -72,15 +72,77 @@ function makeSudoku() {
   template[rng] = box;
 
   // let's set up our rows and cols to make placement easier
-  const rows = setRows(template);
-  const cols = setCols(template);
+  const rows = convertGrid(template, "row");
+  const cols = convertGrid(template, "col");
 
-  console.log("Rows", rows);
-  console.log("Cols", cols);
+  // start setting up sudoku grid
+  for (let i = 0; i < template[rng].length; i++) {
+    let row = 0;
+    let col = 0;
+    if (rng < 3) {
+      if (rng % 3 === 0) {
+        if (i < 3) {
+          row = 0;
+        } else if (i < 6) {
+          row = 1;
+        } else {
+          row = 2;
+        }
+        // console.log("rows 1-3 & cols 1-3")
+      } else if (rng % 3 === 1) {
+        // console.log("rows 1-3 & cols 4-6")
+      } else {
+        // console.log("rows 1-3 & cols 7-9")
+      }
+    } else if (rng < 6) {
+      if (rng % 3 === 0) {
+        // console.log("rows 4-6 & cols 1-3")
+      } else if (rng % 3 === 1) {
+        // console.log("rows 4-6 & cols 4-6")
+      } else {
+        // console.log("rows 4-6 & cols 7-9")
+      }
+    } else {
+      if (rng % 3 === 0) {
+        // console.log("rows 7-9 & cols 1-3")
+      } else if (rng % 3 === 1) {
+        // console.log("rows 7-9 & cols 4-6")
+      } else {
+        // console.log("rows 7-9 & cols 7-9")
+      }
+    }
 
-  // 
+  }
 
   return template;
+}
+
+function insertCellByRow(num, row, grid) {
+  if (row < 3) {
+    if (row % 3 === 0) {
+
+    } else if ( row % 3 === 1) {
+      
+    } else {
+
+    }
+  } else if (row < 6) {
+        if (row % 3 === 0) {
+
+    } else if ( row % 3 === 1) {
+      
+    } else {
+      
+    }
+  } else {
+    if (row % 3 === 0) {
+
+    } else if ( row % 3 === 1) {
+      
+    } else {
+      
+    }
+  }
 }
 
 function shuffle(array) {
@@ -95,72 +157,106 @@ function shuffle(array) {
   return array;
 }
 
-function setRows(array) {
-  const rows = [[], [], [], [], [], [], [], [], []];
-  array.forEach((box, bIndex) => {
-    box.forEach((cell, cIndex) => {
-      if (Math.floor(bIndex / 3) === 0) {
-        if (cIndex < 3) {
-          rows[0].push(cell);
-        } else if (cIndex < 6) {
-          rows[1].push(cell);
-        } else {
-          rows[2].push(cell);
-        }
-      } else if (Math.floor(bIndex / 3) === 1) {
-        if (cIndex < 3) {
-          rows[3].push(cell);
-        } else if (cIndex < 6) {
-          rows[4].push(cell);
-        } else {
-          rows[5].push(cell);
-        }
-      } else {
-        if (cIndex < 3) {
-          rows[6].push(cell);
-        } else if (cIndex < 6) {
-          rows[7].push(cell);
-        } else {
-          rows[8].push(cell);
-        }
-      }
-    })
-  })
-  return rows;
-}
+function convertGrid(grid, type) {
+  let temp = [[],[],[],[],[],[],[],[],[]];
 
-function setCols(array) {
-  const cols = [[],[],[],[],[],[],[],[],[]];
-  array.forEach((box, bIndex) => {
-    box.forEach((cell, cIndex) => {
-      if (bIndex % 3 === 0) {
-        if (cIndex % 3 === 0) {
-          cols[0].push(cell);
-        } else if (cIndex % 3 === 1) {
-          cols[1].push(cell);
-        } else {
-          cols[2].push(cell);
+  switch(type) {
+    case "row":
+      grid.forEach((box, bIndex) => {
+        box.forEach((cell, cIndex) => {
+          if (Math.floor(bIndex / 3) === 0) {
+            if (cIndex < 3) {
+              temp[0].push(cell);
+            } else if (cIndex < 6) {
+              temp[1].push(cell);
+            } else {
+              temp[2].push(cell);
+            }
+          } else if (Math.floor(bIndex / 3) === 1) {
+            if (cIndex < 3) {
+              temp[3].push(cell);
+            } else if (cIndex < 6) {
+              temp[4].push(cell);
+            } else {
+              temp[5].push(cell);
+            }
+          } else {
+            if (cIndex < 3) {
+              temp[6].push(cell);
+            } else if (cIndex < 6) {
+              temp[7].push(cell);
+            } else {
+              temp[8].push(cell);
+            }
+          }
+        })
+      })
+      break;
+    case "col":
+      grid.forEach((box, bIndex) => {
+        box.forEach((cell, cIndex) => {
+          if (bIndex % 3 === 0) {
+            if (cIndex % 3 === 0) {
+              temp[0].push(cell);
+            } else if (cIndex % 3 === 1) {
+              temp[1].push(cell);
+            } else {
+              temp[2].push(cell);
+            }
+          } else if (bIndex % 3 === 1) {
+            if (cIndex % 3 === 0) {
+              temp[3].push(cell);
+            } else if (cIndex % 3 === 1) {
+              temp[4].push(cell);
+            } else {
+              temp[5].push(cell);
+            }
+          } else {
+            if (cIndex % 3 === 0) {
+              temp[6].push(cell);
+            } else if (cIndex % 3 === 1) {
+              temp[7].push(cell);
+            } else {
+              temp[8].push(cell);
+            }
+          }
+        })
+      })
+      break;
+    default:
+      temp = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]
+      grid.forEach((col, coIndex) => {
+        for (let i = 0; i < 9; i++) {
+          if (coIndex < 3) {
+            if (i < 3) {
+              temp[0][(i%3*3) + (coIndex % 3)] = col[i];
+            } else if (i < 6) {
+              temp[3][i%3*3 + (coIndex % 3)] = col[i];
+            } else {
+              temp[6][i%3*3 + (coIndex % 3)] = col[i];
+            }
+          } else if (coIndex < 6) {
+            if (i < 3) {
+              temp[1][(i%3*3) + (coIndex % 3)] = col[i];
+            } else if (i < 6) {
+              temp[4][i%3*3 + (coIndex % 3)] = col[i];
+            } else {
+              temp[7][i%3*3 + (coIndex % 3)] = col[i];
+            }
+          } else {
+            if (i < 3) {
+              temp[2][(i%3*3) + (coIndex % 3)] = col[i];
+            } else if (i < 6) {
+              temp[5][i%3*3 + (coIndex % 3)] = col[i];
+            } else {
+              temp[8][i%3*3 + (coIndex % 3)] = col[i];
+            }
+          }
         }
-      } else if (bIndex % 3 === 1) {
-        if (cIndex % 3 === 0) {
-          cols[3].push(cell);
-        } else if (cIndex % 3 === 1) {
-          cols[4].push(cell);
-        } else {
-          cols[5].push(cell);
-        }
-      } else {
-        if (cIndex % 3 === 0) {
-          cols[6].push(cell);
-        } else if (cIndex % 3 === 1) {
-          cols[7].push(cell);
-        } else {
-          cols[8].push(cell);
-        }
-      }
-    })
-  })
-  return cols;
+      })
+      break;
+  }
+  return temp;
 }
 
 const sudoku = makeSudoku();
