@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .container {
+    padding: 15px;
+    margin: 0px auto;
+  }
+  .grid {
+    display: flex;
+    width: 100%;
+    margin: 0px;
+  }
+  .box {
+    display: flex;
+    margin: 0px;
+    border: 1px solid black;
+  }
+  .cell {
+    display: flex;
+    border: 1px solid black;
+    margin: 0px;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+  body {
+    font-size: 28px;
+    font-weight: bold;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="grid">
+      <div class="col">
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+          <div class="col">
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+            <div class="cell">1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="content">
+
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="script.js"></script>
+</html>
