@@ -49,7 +49,7 @@ function makeCell(num) {
 }
 
 function makeSudoku() {
-  const template = [
+  let template = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -62,7 +62,8 @@ function makeSudoku() {
   ]
 
   // first let's pick a random box in the template
-  const rng = Math.floor(Math.random() * 9);
+  // const rng = Math.floor(Math.random() * 9);
+  const rng = 0;
 
   // then we set up the box with 1-9 and shuffle it around
   let box = [1,2,3,4,5,6,7,8,9];
@@ -72,8 +73,8 @@ function makeSudoku() {
   template[rng] = box;
 
   // let's set up our rows and cols to make placement easier
-  const rows = convertGrid(template, "row");
-  const cols = convertGrid(template, "col");
+  const rowGrid = convertGrid(template, "row");
+  const colGrid = convertGrid(template, "col");
 
   // start setting up sudoku grid
   for (let i = 0; i < template[rng].length; i++) {
@@ -83,10 +84,13 @@ function makeSudoku() {
       if (rng % 3 === 0) {
         if (i < 3) {
           row = 0;
+          rows = insertCellByRow(template[rng][i], row, rowGrid);
         } else if (i < 6) {
           row = 1;
+          // rows = insertCellByRow(template[rng][i], row, rowGrid);
         } else {
           row = 2;
+          // rows = insertCellByRow(template[rng][i], row, rowGrid);
         }
         // console.log("rows 1-3 & cols 1-3")
       } else if (rng % 3 === 1) {
@@ -114,17 +118,57 @@ function makeSudoku() {
 
   }
 
+  template = convertGrid(rows, "row")
+  console.log(template);
+  console.log(Array.from(template[0], (data, i) => i < 3))
   return template;
 }
 
 function insertCellByRow(num, row, grid) {
   if (row < 3) {
     if (row % 3 === 0) {
-
-    } else if ( row % 3 === 1) {
-      
+      console.log("?");
+      while (grid[row+1].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 3;
+        if (grid[row+1][rng] === 0) {
+          grid[row+1][rng] = num;
+        }
+      }
+      while (grid[row+2].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 6;
+        if (grid[row+2][rng] === 0) {
+          grid[row+2][rng] = num;
+        }
+      }
+    } else if (row % 3 === 1) {
+      console.log("?");
+      while (grid[row-1].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 3;
+        if (grid[row-1][rng] === 0) {
+          grid[row-1][rng] = num;
+        } else {
+          grid[roq-1][rng] = 0;
+        }
+      }
+      while (grid[row+1].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 6;
+        if (grid[row+1][rng] === 0) {
+          grid[row+1][rng] = num;
+        }
+      }
     } else {
-
+      while (grid[row-1].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 3;
+        if (grid[row-1][rng] === 0) {
+          grid[row-1][rng] = num;
+        }
+      }
+      while (grid[row-2].indexOf(num) === -1) {
+        const rng = Math.floor(Math.random() * 3) + 6;
+        if (grid[row-2][rng] === 0) {
+          grid[row-2][rng] = num;
+        }
+      }
     }
   } else if (row < 6) {
         if (row % 3 === 0) {
@@ -143,6 +187,7 @@ function insertCellByRow(num, row, grid) {
       
     }
   }
+  return grid;
 }
 
 function shuffle(array) {
@@ -231,25 +276,25 @@ function convertGrid(grid, type) {
             if (i < 3) {
               temp[0][(i%3*3) + (coIndex % 3)] = col[i];
             } else if (i < 6) {
-              temp[3][i%3*3 + (coIndex % 3)] = col[i];
+              temp[3][(i%3*3) + (coIndex % 3)] = col[i];
             } else {
-              temp[6][i%3*3 + (coIndex % 3)] = col[i];
+              temp[6][(i%3*3) + (coIndex % 3)] = col[i];
             }
           } else if (coIndex < 6) {
             if (i < 3) {
               temp[1][(i%3*3) + (coIndex % 3)] = col[i];
             } else if (i < 6) {
-              temp[4][i%3*3 + (coIndex % 3)] = col[i];
+              temp[4][(i%3*3) + (coIndex % 3)] = col[i];
             } else {
-              temp[7][i%3*3 + (coIndex % 3)] = col[i];
+              temp[7][(i%3*3) + (coIndex % 3)] = col[i];
             }
           } else {
             if (i < 3) {
               temp[2][(i%3*3) + (coIndex % 3)] = col[i];
             } else if (i < 6) {
-              temp[5][i%3*3 + (coIndex % 3)] = col[i];
+              temp[5][(i%3*3) + (coIndex % 3)] = col[i];
             } else {
-              temp[8][i%3*3 + (coIndex % 3)] = col[i];
+              temp[8][(i%3*3) + (coIndex % 3)] = col[i];
             }
           }
         }
