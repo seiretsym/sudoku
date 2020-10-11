@@ -87,76 +87,124 @@ function makeCol() {
 
 function makeCell(num) {
   const cell = $("<div>").addClass("cell").text(num);
+  if (cell.text() === "0") {
+    cell.addClass("error")
+  }
+  if (cell.text() === "1") {
+    cell.addClass("one")
+  }
+  if (cell.text() === "2") {
+    cell.addClass("two")
+  }
+  if (cell.text() === "3") {
+    cell.addClass("three")
+  }
+  if (cell.text() === "4") {
+    cell.addClass("four")
+  }
+  if (cell.text() === "5") {
+    cell.addClass("five")
+  }
+  if (cell.text() === "6") {
+    cell.addClass("six")
+  }
+  if (cell.text() === "7") {
+    cell.addClass("seven")
+  }
+  if (cell.text() === "8") {
+    cell.addClass("eight")
+  }
+  if (cell.text() === "9") {
+    cell.addClass("nine")
+  }
   return cell;
 }
 
-function checkGrid(grid) {
-  for (let rows = 0; rows < 9; rows++) {
-    for (let cols = 0; cols < 9; cols++) {
-      if (grid[rows][cols] === 0) {
-        return false
-      }
+async function makeSudoku() {
+  const solution = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9,
+    4, 5, 6, 7, 8, 9, 1, 2, 3,
+    7, 8, 9, 1, 2, 3, 4, 5, 6,
+    2, 3, 4, 5, 6, 7, 8, 9, 1,
+    5, 6, 7, 8, 9, 1, 2, 3, 4,
+    8, 9, 1, 2, 3, 4, 5, 6, 7,
+    3, 4, 5, 6, 7, 8, 9, 1, 2,
+    6, 7, 8, 9, 1, 2, 3, 4, 5,
+    9, 1, 2, 3, 4, 5, 6, 7, 8
+  ]
+  const template = await shuffleGrid(solution);
+
+  const sudoku = [];
+
+  for (let r = 0; r < 9; r++) {
+    let temp = [];
+    for (let c = 0; c < 9; c++) {
+      temp.push(template[r*9+c]);
     }
+    sudoku.push(temp);
   }
-  return true;
+
+  makeGrid(sudoku);
 }
 
-function makeSudoku() {
-  let template = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ]
+async function shuffleGrid(grid) {
 
-  // total cells = 81 so loop 81 times
-  for (let cell = 0; cell < 81; cell++) {
-    // determine row and col
-    const row = Math.floor(i / 9);
-    const col = i % 9;
+  for (let i = 0; i < 42; i++) {
+    let n1 = Math.ceil(Math.random() * 9);
+    let n2;
+    
+    do {
+      n2 = Math.ceil(Math.random() * 9);
+    }
+    while (n1 === n2);
 
-    if (template[row][col] === 0) {
-      // loop through each number used in sudoku 1-9
-      for (let num = 1; num < 10; num++) {
-        // check if number has been used in row
-        if (template[row].indexOf(num) > -1) {
-          continue;
-        } else {
-          // check if number has been used in col
-          let checkCol = false;
-          for (let c = 0; c < 9; c++) {
-            if (template[row][c] === num) {
-              checkCol = true;
-              break;
-            } else {
-              // check the box we're working on
-            }
-          }
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        if (grid[row * 9 + col] === n1) {
+          grid[row * 9 + col] = n2;
+        }
+        else if (grid[row * 9 + col] === n2) {
+          grid[row * 9 + col] = n1;
         }
       }
     }
   }
 
-  console.log(template);
-  return template;
-}
+  for (let c = 0; c < 42; c++) {
+    let s1 = Math.floor(Math.random() * 3);
+    let s2 = Math.floor(Math.random() * 3);
 
-function shuffle(array) {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i+1; j < array.length; j++) {
-      let temp = array[i];
-      let rng = Math.floor(Math.random() * array.length);
-      array[i] = array[rng];
-      array[rng] = temp;
+    for(let row = 0; row < 9; row++) {
+      let tmp = grid[row * 9 + (s1 * 3 + c % 3)];
+      grid[row * 9 + (s1 * 3 + c % 3)] = grid[row * 9 + (s2 * 3 + c % 3)];
+      grid[row * 9 + (s2 * 3 + c % 3)] = tmp;
     }
   }
-  return array;
+
+  for (let s = 0; s < 42; s++) {
+    let c1 = Math.floor(Math.random() * 3);
+    let c2 = Math.floor(Math.random() * 3);
+
+    for(let row = 0; row < 9; row++) {
+      let tmp = grid[row * 9 + (s % 3 * 3 + c1)];
+      grid[row * 9 + (s % 3 * 3 + c1)] = grid[row * 9 + (s % 3 * 3 + c2)];
+      grid[row * 9 + (s % 3 * 3 + c2)] = tmp;
+    }
+  }
+
+  for (let s = 0; s < 42; s++) {
+    let r1 = Math.floor(Math.random() * 3);
+    let r2 = Math.floor(Math.random() * 3);
+
+    for(let col = 0; col < 9; col++)
+    {
+      let tmp = grid[(s % 3 * 3 + r1) * 9 + col];
+      grid[(s % 3 * 3 + r1) * 9 + col] = grid[(s % 3 * 3 + r2) * 9 + col];
+      grid[(s % 3 * 3 + r2) * 9 + col] = tmp;
+    }
+  }
+
+  return grid;
 }
 
-const sudoku = makeSudoku();
-makeGrid(sudoku);
+makeSudoku();
